@@ -16,18 +16,27 @@ $(function() {
 			}
 			
 		};
-		
-		$.post('pessoas', JSON.Stringify(json))
-			//done é chamado depois que voltou do servidor (callback)
-			.done(function (retorno) { 
-				alert('mensagem do servidor ' + retorno);
+		console.log(JSON.stringify(json));
+		$.ajax({
+			type: "post",
+			url: 'pessoas',
+			contentType: "application/json",
+			data: JSON.stringify(json),
+			success: function(retorno) {
+				alert(retorno + " alterado com sucesso!");
 				$('.main').load('listar.html');
 				listarPessoas();
-
-			});
+			}});
+			event.preventDefault();
+		}); 
+//			//done é chamado depois que voltou do servidor (callback)
+//			.done(function (retorno) { 
+//				alert('mensagem do servidor ' + retorno);
+//				$('.main').load('listar.html');
+//				listarPessoas();
+//
+//			});
 		
-		event.preventDefault();
-	});
 	
 	$('.main').on('blur', '#cepPessoa', function(event) {
 		
@@ -68,12 +77,12 @@ $(function() {
 		
 		console.log(cpfAtual);
 		$.ajax({
-			url: 'pessoas',
+			url: 'pessoas/' + cpfAtual,
 			data: cpfAtual,
 			dataType: 'text',
 			method: 'delete',
 			success: function (response) {
-				alert(response);
+				alert("cpf: " + response + " deletado com sucesso");
 				$('.main').load('listar.html');
 				listarPessoas();
 			}

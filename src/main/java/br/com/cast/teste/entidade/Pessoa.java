@@ -21,7 +21,7 @@ public class Pessoa {
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "endereco")
-	Endereco endereco;
+	Endereco endereco; 
 	
 	public String getCpf() {
 		return cpf;

@@ -35,16 +35,20 @@ public class PessoaController {
 	}
 	
 	@RequestMapping(path="{cpf}", method=RequestMethod.DELETE)
-	public void deletar(@PathVariable("cpf") String cpf) {
+	@ResponseBody
+	public String deletar(@PathVariable("cpf") String cpf) {
 		pServ.deletar(cpf);
+		return cpf;
 		
 	}
 	
-	@RequestMapping(method=RequestMethod.POST) 
-	public void salvar(@RequestBody PessoaDTO pdto) {
-		pServ.salvar(pdto);
+	@RequestMapping(method=RequestMethod.POST, consumes={"application/json"}) 
+	@ResponseBody
+	public String salvar(@RequestBody PessoaDTO json) {
+		
+		pServ.salvar(json);
+		return json.getNome();
 	}
-	
 	
     @RequestMapping("/")
     public String index() {
